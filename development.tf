@@ -1,11 +1,13 @@
 provider "aws" {
   profile = "default"
   region = "ap-southeast-2"
+  access_key = file(var.aws_access_key)
+  secret_key = file(var.aws_secret_key)
 }
 
 resource "aws_key_pair" "key" {
   key_name   = "dev-login"
-  public_key = "${file(var.public_key)}"
+  public_key = file(var.public_key)
 }
 
 resource "aws_instance" "development" {

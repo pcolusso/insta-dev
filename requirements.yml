@@ -1,3 +1,9 @@
 ---
 - src: geerlingguy.docker
   name: docker
+- src: rvm.ruby
+  name: rvm
+- src: geerlingguy.git
+  name: git
+- src: pallxk.code_server
+  name: code_server

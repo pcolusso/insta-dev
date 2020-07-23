@@ -3,3 +3,41 @@
   become: true
   roles:
     - role: docker
+      docker_users:
+        - ubuntu
+    - role: rvm
+    - role: git
+    - role: code_server
+      code_server_auth: {{ item }}
+      with_file:
+        - ./private/code-server-password
+  tasks:
+    - name: Install packages
+      package:
+        name:
+          - tmux
+          - vim
+          - nodejs
+          - build-essential
+          - ddclient
+        state: present
+    - name: Copy SSH
+      copy:
+        src: "{{ item }}"
+        dest: ~/.shh/
+        owner: ubuntu
+        mode: '700'
+      with_fileglob:
+        - ./private/id*
+    - name: Copy DDClient conf
+      copy:
+        src: ./private/ddclient.conf
+        dest: /etc/ddclient.conf
+        owner: root
+    - name: Start DDClient
+      systemd:
+        state: started
+        name: ddclient
+        enabled: yes
+    
+    

@@ -2,3 +2,4 @@
 *.tfstate
 address.txt
 dev.ini
+private*
